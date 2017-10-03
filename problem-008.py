@@ -22,14 +22,13 @@ n1000 = "73167176531330624919225119674426574742355349194934\
 
 listof13 = []
 for i in range (len(n1000) - 12):
-    listof13.append(n1000[i:i+13])
-
-# filter out sequences with "0"
-filtered = [number for number in listof13 if '0' not in number]
+    # Filter out sequences with 0, as it sets any product to 0
+    if '0' not in n1000[i:i+13]:
+        listof13.append(n1000[i:i+13])
 
 # brute force way
 answer = 0
-for number in filtered:
+for number in listof13:
     temp = 1
     for d in number:
         temp *= int(d)
