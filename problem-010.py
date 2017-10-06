@@ -8,6 +8,9 @@ Find the sum of all the primes below two million.
 import math
 import time
 
+
+limit = 2000000
+
 t0 = time.time()
 # initial listof13
 primes = [2]
@@ -23,10 +26,8 @@ t1 = time.time()
 total = t1 - t0
 print("Naive solution: {} in time: {}".format(sol, total))
 
-
 # The sieve of Eratosthenes
 t0 = time.time()
-limit = 2000000
 crosslimit = int(math.sqrt(limit))
 sieve = [False]*limit
 
@@ -46,3 +47,24 @@ for n in range(2, limit):
 t1 = time.time()
 total = t1-t0
 print("Sieve solution: {} in time: {}".format(solution_era, total))
+
+
+# Improved sieve
+t0 = time.time()
+sievebound = int((limit - 1)/2)
+sieve  = [False]*sievebound
+crosslimit = int( ( math.floor(math.sqrt(limit)) - 1 ) / 2)
+
+for i in range(1, crosslimit):
+    if not sieve[i]:
+        for j in range(2*i*(i+1), sievebound, 2*i+1):
+            sieve[j] = True
+
+solution_improved_sieve = 2
+for i in range(1, sievebound):
+    if not sieve[i]:
+        solution_improved_sieve += (2*i+1)
+
+t1 = time.time()
+total = t1-t0
+print("Improved sieve solution: {} in time: {}".format(solution_improved_sieve, total))
